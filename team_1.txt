@@ -1,0 +1,58 @@
+-------------------------------------------------------- 
+Problem #3
+
+A XOR B = (if A true AND B false) OR (if A false AND B true)
+                    E                           F
+
+A XOR B = if E then TRUE else F = E (λx.λy.x) F
+
+TRUE = (λx.λy.x)
+FALSE = (λx.λy.y)
+NOT(B) = (B (λx.λy.y) (λx.λy.x))
+NOT(A) = (A (λx.λy.y) (λx.λy.x))
+
+E = A AND NOT(B) 
+    = A (B (λx.λy.y) (λx.λy.x)) (λx.λy.y)
+
+F = NOT(A) AND B 
+    = (A (λx.λy.y) (λx.λy.x)) B (λx.λy.y)
+
+A XOR B = (A (B (λx.λy.y) (λx.λy.x)) (λx.λy.y)) (λx.λy.x) ((A (λx.λy.y) (λx.λy.x)) B (λx.λy.y))
+
+-------------------------------------------------------- 
+Problem #4:
+
+    (x,y) = (2^(n+1) + 1, 2^n + 1)
+
+    a. Base case, (x,y) = (3,2) 
+        n = 0
+        x = 2^(0+1) + 1 = 3
+        y = 2^0 + 1 = 2
+        Base case holds
+    
+    b. Inductive hypothesis
+        assume for some element n = k, (x,y) is an element of S and (x,y) = (2^(k+1) + 1, 2^k + 1)
+
+    c. Inductive step 
+
+        Suppose (x,y) = (2^(k+1) + 1, 2^k + 1)
+
+        The next element is (v,w) = (3x - 2y, x)
+
+        Show that (v,w) = (2^((k+1)+1) + 1, 2^(k+1) + 1)
+
+        v = 3x - 2y = 3(2^(k+1) + 1) - 2(2^k + 1)
+            = 3 * 2^(k+1) - 2 * 2^k + 1
+            = 2^k(3 * 2 - 2) + 1
+            = 2^k * 4 + 1
+            = 2^(k+2) + 1
+
+        w = x = 2^(k+1) + 1
+
+        (v,w) = (2^(k+2) + 1, 2^(k+1) + 1)
+
+        This matches the desired form above.
+-------------------------------------------------------- 
+        
+        
+
