@@ -71,6 +71,121 @@ Problem #4:
 
         This matches the desired form above.
 -------------------------------------------------------- 
+  Problem #5:      
         
-        
+Definitions:
+1. Reflect: A function that swaps the left and right subtrees of a binary tree at every node.
+2. Inorder: A function that produces a list of the values in a tree by traversing the tree in the left-root-right order.
+3. Rev: A function that reverses the order of elements in a list.
 
+Structual Induction:
+
+Base Case:
+The simplest tree is the empty tree, denoted by Empty.
+
+- reflect(Empty) = Empty
+- inorder(reflect(Empty)) = inorder(Empty) = []
+- rev(inorder(reflect(Empty))) = rev([]) = []
+- inorder(Empty) = []
+
+Thus, rev(inorder(reflect(Empty))) = inorder(Empty).
+
+The base case holds.
+
+
+Inductive Hypothesis:
+Assume that for a tree x, the property holds:
+    rev(inorder(reflect(x))) = inorder(x)
+This will prove it for a tree Node(v, l, r), where v is the root value, l is the left subtree, and r is the right subtree.
+
+
+Inductive Step:
+For the tree Node(v, l, r):
+1. Reflect swaps the left and right subtrees:
+    reflect(Node(v, l, r)) = Node(v, reflect(r), reflect(l))
+
+2. Inorder of the reflected tree:
+    inorder(reflect(Node(v, l, r))) = inorder(reflect(r)) + [v] + inorder(reflect(l))
+
+3. Rev of the result:
+    rev(inorder(reflect(Node(v, l, r)))) = rev(inorder(reflect(l)) + [v] + inorder(reflect(r)))
+
+    Using the property of list reversal:
+        rev(A + B) = rev(B) + rev(A)
+    This becomes:
+        rev(inorder(reflect(Node(v, l, r)))) = rev(inorder(reflect(r))) + [v] + rev(inorder(reflect(l)))
+
+4. By the inductive hypothesis:
+    rev(inorder(reflect(r))) = inorder(r)
+    rev(inorder(reflect(l))) = inorder(l)
+
+    Substituting these:
+        rev(inorder(reflect(Node(v, l, r)))) = inorder(r) + [v] + inorder(l)
+
+5. This is exactly the inorder traversal of the original tree:
+        inorder(Node(v, l, r)) = inorder(l) + [v] + inorder(r)
+
+Thus:
+    rev(inorder(reflect(Node(v, l, r)))) = inorder(Node(v, l, r))
+
+
+Conclusion:
+By structural induction, it has been shown that:
+    rev(inorder(reflect(x))) = inorder(x)
+for all binary trees x.
+
+-------------------------------------------------------- 
+  Problem #6:      
+
+Definitions:
+1. Reflect: A function that swaps the left and right subtrees of a binary tree at every node.
+2. Preorder: A function that produces a list of the values in a tree by traversing the tree in the root-left-right order.
+3. Postorder: A function that produces a list of the values in a tree by traversing the tree in the left-right-root order.
+4. Rev: A function that reverses the order of elements in a list.
+
+Structural Induction:
+
+Base Case:
+The simplest tree is the empty tree, denoted by Empty.
+
+- reflect(Empty) = Empty
+- preorder(Empty) = []
+- postorder(reflect(Empty)) = postorder(Empty) = []
+- rev(preorder(Empty)) = rev([]) = []
+
+Thus, postorder(reflect(Empty)) = rev(preorder(Empty)).
+
+The base case holds.
+
+Inductive Hypothesis:
+Assume that for a tree x, the property holds:
+    postorder(reflect(x)) = rev(preorder(x))
+This will prove it for a tree Node(v, l, r), where v is the root value, l is the left subtree, and r is the right subtree.
+
+Inductive Step:
+For the tree Node(v, l, r):
+1. Reflect swaps the left and right subtrees:
+    reflect(Node(v, l, r)) = Node(v, reflect(r), reflect(l))
+
+2. Postorder of the reflected tree:
+    postorder(reflect(Node(v, l, r))) = postorder(reflect(r)) + postorder(reflect(l)) + [v]
+
+3. By the inductive hypothesis:
+    postorder(reflect(r)) = rev(preorder(r))
+    postorder(reflect(l)) = rev(preorder(l))
+
+    Substituting these:
+        postorder(reflect(Node(v, l, r))) = rev(preorder(r)) + rev(preorder(l)) + [v]
+
+4. By the property of list reversal:
+    rev(preorder(Node(v, l, r))) = rev(preorder(l) + preorder(r) + [v])
+                                 = rev([v]) + rev(preorder(r)) + rev(preorder(l))
+                                 = [v] + rev(preorder(r)) + rev(preorder(l))
+
+Thus:
+    postorder(reflect(Node(v, l, r))) = rev(preorder(Node(v, l, r)))
+
+Conclusion:
+By structural induction, it has been shown that:
+    postorder(reflect(x)) = rev(preorder(x))
+for all binary trees x.
